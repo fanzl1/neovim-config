@@ -135,8 +135,11 @@ Plug 'myusuf3/numbers.vim'
 " personal Plug
 Plug 'neomake/neomake'
 Plug 'joshdick/onedark.vim'
-"Plug 'arakashic/chromatica.nvim'
+Plug 'arakashic/chromatica.nvim'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'easymotion/vim-easymotion'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " Tell vim-plug we finished declaring plugins, so it can load them
 call plug#end()
@@ -315,7 +318,7 @@ let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_smart_case = 1
 
 let g:deoplete#sources#clang#libclang_path = '/usr/local/opt/llvm/lib/libclang.dylib'
-let g:deoplete#sources#clang#clang_header = '/usr/local/opt/llvm/include'
+let g:deoplete#sources#clang#clang_header = '/usr/local/opt/llvm/lib/clang'
 " complete with words from any opened file
 let g:context_filetype#same_filetypes = {}
 let g:context_filetype#same_filetypes._ = '_'
@@ -402,3 +405,41 @@ colorscheme onedark
 
 " nerdcommenter注释的时候自动加个空格, 强迫症必配
 let g:NERDSpaceDelims=1
+
+" chromatica setting
+let g:chromatica#enable_at_startup=0
+let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
+
+" easymotion setting
+nmap <leader>s <Plug>(easymotion-lineforward)
+
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+augroup run_file
+    autocmd!
+    autocmd filetype cpp nnoremap <silent> <F5> :w<CR>:!clear<CR>:!g++ % -o %< && ./%< <CR>
+    autocmd FileType c nnoremap <silent> <F5> :w<CR>:!clear<CR>:!gcc % -o %< && ./%< <CR>
+augroup END
+
+" 代码片段
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
