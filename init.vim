@@ -41,6 +41,7 @@ Plug 'scrooloose/nerdtree'
 
 " Class/module browser
 Plug 'majutsushi/tagbar'
+Plug 'Yggdroot/LeaderF'
 " TODO known problems:
 " * current block not refreshing
 
@@ -65,8 +66,10 @@ Plug 'fisadev/FixedTaskList.vim'
 
 " Async autocompletion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/echodoc.vim'
 
 Plug 'zchee/deoplete-clang'
+Plug 'tenfyzhong/CompleteParameter.vim'
 
 " Completion from other opened files
 Plug 'Shougo/context_filetype.vim'
@@ -108,9 +111,6 @@ Plug 'fisadev/vim-isort'
 " Highlight matching html tags
 Plug 'valloric/MatchTagAlways'
 
-" Generate html in a simple way
-Plug 'mattn/emmet-vim'
-
 " Git integration
 Plug 'tpope/vim-fugitive'
 
@@ -140,6 +140,7 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'easymotion/vim-easymotion'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'Raimondi/delimitMate'
 
 " Tell vim-plug we finished declaring plugins, so it can load them
 call plug#end()
@@ -323,6 +324,10 @@ let g:deoplete#sources#clang#clang_header = '/usr/local/opt/llvm/lib/clang'
 let g:context_filetype#same_filetypes = {}
 let g:context_filetype#same_filetypes._ = '_'
 
+" ehcodoc
+set cmdheight=2
+let g:echodoc_enable_at_startup = 1
+
 " Jedi-vim ------------------------------
 
 " Disable autocompletion (using deoplete instead)
@@ -443,3 +448,27 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+
+let g:delimitMate_expand_cr = 1
+
+" leaderf
+let g:Lf_ShowRelativePath = 0
+let g:Lf_HideHelp = 1
+let g:Lf_PreviewResult = {'Function':0, 'Colorscheme':1}
+
+let g:Lf_NormalMap = {
+	\ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+	\ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+	\ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+	\ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+	\ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+	\ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+	\ }
+noremap <F2> :LeaderfFunction!<cr>
+
+" CompleteParameter.vim
+" inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+" smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+" imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+" smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+" imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
